@@ -30,4 +30,14 @@ public class OrderClient extends Client {
                 .post(PATH) // Выполнение POST-запроса по указанному пути
                 .then();
     }
+
+    // Метод для отмены заказа по номеру отслеживания
+    @Step("cancel Order")
+    public ValidatableResponse cancelOrder(int track) {
+        return given()
+                .spec(getSpec())
+                .when()
+                .delete(PATH + "/" + track)
+                .then();
+    }
 }

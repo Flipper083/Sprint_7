@@ -1,4 +1,5 @@
 import io.qameta.allure.junit4.DisplayName;
+import io.qameta.allure.Description; // Импортируем аннотацию Description
 import io.restassured.response.ValidatableResponse;
 
 import org.example.OrderClient;
@@ -25,7 +26,8 @@ public class OrderListTest {
     // Тест на проверку получения списка заказов
     @Test
     @DisplayName("Проверка, что в тело ответа возвращается список заказов.")
-    public void getOrderReturnedOrderList() {
+    @Description("This test verifies that the response body returns a list of orders.")
+    public void getOrderReturnedOrderListTest() {
         // Получение списка заказов через API
         ValidatableResponse responseOrderList = orderClient.returnOrderList();
 

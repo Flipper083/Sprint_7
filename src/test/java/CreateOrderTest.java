@@ -1,4 +1,5 @@
 import io.qameta.allure.junit4.DisplayName;
+import io.qameta.allure.Description;
 import io.restassured.response.ValidatableResponse;
 
 import org.example.Order;
@@ -16,17 +17,17 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class CreateOrderTest {
-    private OrderClient orderClient; // Клиент для работы с заказами
+    private OrderClient orderClient;
     private Order order; // Заказ, который мы будем создавать
     private int statusCode; // Ожидаемый статус-код ответа
 
+    // Конструктор для инициализации параметров теста
     public CreateOrderTest(Order order, int statusCode) {
-        this.order = order;
-        this.statusCode = statusCode;
+        this.order = order; // Инициализация объекта заказа
+        this.statusCode = statusCode; // Инициализация ожидаемого статус-кода
     }
 
-    // Параметры для теста, включая различные объекты заказа и ожидаемый статус-код
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: {0}, Ожидаемый статус: {1}")
     public static Object[][] getTestData() {
         return new Object[][]{
                 {OrderGenerator.getWithBlackColor(), SC_CREATED}, // Заказ с черным цветом
@@ -45,7 +46,8 @@ public class CreateOrderTest {
     // Тест, который проверяет создание заказа
     @Test
     @DisplayName("Checking if the body of the response contains track")
-    public void orderCanBeCreated(){
+    @Description("This test verifies that an order can be created and the response contains a valid tracking number.") // Описание теста
+    public void orderCanBeCreatedTest() {
         // Создание заказа и получение ответа
         ValidatableResponse responseCreate = orderClient.createOrder(order);
 
@@ -60,5 +62,8 @@ public class CreateOrderTest {
 
         // Проверка, что фактический статус-код совпадает с ожидаемым
         assertEquals("Status Code incorrect", statusCode, actualStatusCode);
+
+        // Отмена созданного заказа после выполнения теста
+        orderClient.cancelOrder(track);
     }
 }

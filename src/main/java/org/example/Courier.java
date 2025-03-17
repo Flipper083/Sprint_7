@@ -6,7 +6,8 @@ public class Courier {
     private String password;   // Пароль курьера
     private String firstName;  // Имя курьера
 
-    public Courier() { }
+    public Courier() {
+    }
 
     // Конструктор с параметрами для инициализации атрибутов курьера
     public Courier(String login, String password, String firstName) {
